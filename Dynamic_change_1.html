@@ -1,0 +1,107 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<head>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    
+     
+    <input width="500 px"  type="range" min="0" max="10" value="500" step="1" onchange="sliderChange(this.value)"/>
+    <br/> <br/>
+    Slider value = <span id="sliderStatus">5</span>
+    <!-- Plotly chart will be drawn inside this DIV -->
+    <div id="myDiv" style="width: 100%; height: 500px;"></div>
+    <script type="text/javascript" >
+         
+        function sliderChange(val) {
+            document.getElementById('sliderStatus').innerHTML = val;
+            var plotDiv = document.getElementById('myDiv');
+            var traceTemp = {
+        	x: e(3,100),
+           // x: [.5,.99, 10,56,1000],
+            y: f(e(3,100), val),
+            //y: [1, 3, 6, 4, 5, 2, 3, 5, 4],
+           
+        	}
+        	console.log(traceTemp);
+            data = [traceTemp];
+            plotDiv.data = data;
+            Plotly.redraw(plotDiv);
+        }
+
+        //console.log(val);
+        function e(lowEnd,highEnd){
+        var list = [];
+         for (var i = lowEnd; i <= highEnd; i=i+0.005) {
+            list.push(i);
+          }
+            return list
+               }
+
+function yFunc(xVal, slope) {
+	var m = slope;
+	var C = 3.0;
+	return m*xVal + C;
+}
+
+function f(xlist, slope){
+        var list = [];
+        var arrayLength = xlist.length;
+		for (var i = 0; i < arrayLength; i++) {
+    		var xi = xlist[i];
+    		var yi = yFunc(xi, slope);
+    		list.push(yi);
+}
+            return list;
+               }
+
+console.log(e(15,320));
+
+
+        var trace1 = {
+        	x: e(3,100),
+           // x: [.5,.99, 10,56,1000],
+            y: f(e(3,100), 1),
+            //y: [1, 3, 6, 4, 5, 2, 3, 5, 4],
+            type: 'scatter'
+
+            
+        };
+       //trace1.x = [100];
+      //  var trace2 = {
+        //    x: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+          //  y: [0, 4, 7, 8, 3, 6, 3, 3, 4],
+            //type: 'scatter'
+        //};
+        var data = [trace1];
+        var layout = {legend: {
+                x: 0,
+                y: 1,
+                traceorder: 'normal',
+                font: {
+                    family: 'sans-serif',
+                    size: 12,
+                    color: '#000'
+                },
+                bgcolor: '#E2E2E2',
+                bordercolor: '#FFFFFF',
+                borderwidth: 2
+        }};
+      
+
+     // var update = {
+    //color: 'red'
+             // };
+ Plotly.newPlot('myDiv', data, layout);
+//Plotly.restyle('myDiv', update, [0]);
+
+
+
+    </script>
+   
+</body>
